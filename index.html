@@ -62,9 +62,10 @@
             <input type="radio" id="outbound" name="direction" value="outbound">
             <label for="cold">Cold leads</label>
             </div>
+          
             <!-- Q4: Is it pre-existing or new case? -->
             <div class="form-group">
-                <label>Q3: Is it pre-existing or new case?</label><br>
+                <label>Q4: Is it pre-existing or new case?</label><br>
                 <input type="radio" id="pre-existing" name="case_type" value="pre-existing" required>
                 <label for="pre-existing">Pre-existing</label><br>
                 <input type="radio" id="new-case" name="case_type" value="new">
@@ -86,20 +87,31 @@
             <!-- Q4.2: New case objectives -->
             <div id="new-case-fields" class="hidden">
                 <div class="form-group">
-                    <label for="objective1">Q3.2.1: Objective 1 (for new cases)</label><br>
+                    <label for="objective1">Q4.2.1: Objective 1 (for new cases)</label><br>
                     <input type="text" id="objective1" name="objective1" placeholder="Enter Objective 1"><br>
                 </div>
                 <div class="form-group">
-                    <label for="objective2">Q3.2.2: Objective 2</label><br>
+                    <label for="objective2">Q4.2.2: Objective 2</label><br>
                     <input type="text" id="objective2" name="objective2" placeholder="Enter Objective 2"><br>
                 </div>
                 <div class="form-group">
-                    <label for="objective3">Q3.2.3: Objective 3</label><br>
+                    <label for="objective3">Q4.2.3: Objective 3</label><br>
                     <input type="text" id="objective3" name="objective3" placeholder="Enter Objective 3">
                 </div>
             </div>
-            <!-- Q5: Which template-->
-               
+         
+   <!-- Q5: Which template-->
+   <div class="form-group">
+    <label for="persona">Q5: Which persona:</label>
+
+    <select name="personas" id="personas">
+    <option value="lead_qualification">Lead Qualification</option>
+    <option value="book_meeting">Book meeting</option>
+    <option value="support">Support</option>
+    <option value="survey">Survey</option>
+    </select>
+    </div>
+      
 
             <!-- Next Button -->
             <button type="button" onclick="nextSection()">Next</button>
@@ -262,7 +274,7 @@
 
         <!-- Navigation Buttons -->
         <button type="button" onclick="prevSection()">Back</button>
-        <button type="button" onclick="nextSection()">Submit</button>
+        <button id="submitButton">Submit</button>
 
         </div>
      
@@ -323,9 +335,14 @@
             showSection(currentSection);
         }
     }
-
+  
     showSection(currentSection);
+    function submit() {
+            alert('Congratulations, you did it!');
+        }
+        document.getElementById('submitButton').addEventListener('click', submit);
 </script>
 
 </body>
 </html>
+
