@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent Design</h1>
+
+    <form id="agent-form" action="/submit" method="post" enctype="multipart/form-data">
+
+        <!-- Section 1 -->
+        <div id="section1" class="section active">
+            <!-- Q1: How many leads per month? -->
+            <div class="form-group">
+                <label for="leads">Q1: How many leads per month?</label><br>
+                <input type="number" id="leads" name="leads" required min="0" step="1">
+            </div>
+            
+            <!-- Q2: Is it inbound or outbound? -->
+            <div class="form-group">
+                <label>Q2: Is it inbound or outbound?</label><br>
+                <input type="radio" id="inbound" name="direction" value="inbound" required>
+                <label for="inbound">Inbound</label><br>
+                <input type="radio" id="outbound" name="direction" value="outbound">
+                <label for="outbound">Outbound</label>
+            </div>
+            
+            
+            <!-- Q3: Is it warm or cold leads? -->
+            <div class="form-group">
+            <label>Q3: Is it warm or cold leads?</label><br>
+            <input type="radio" id="inbound" name="direction" value="inbound" required>
+            <label for="warm">Warm leads</label><br>
+            <input type="radio" id="outbound" name="direction" value="outbound">
+            <label for="cold">Cold leads</label>
+            </div>
+            <!-- Q4: Is it pre-existing or new case? -->
+            <div class="form-group">
+                <label>Q3: Is it pre-existing or new case?</label><br>
+                <input type="radio" id="pre-existing" name="case_type" value="pre-existing" required>
+                <label for="pre-existing">Pre-existing</label><br>
+                <input type="radio" id="new-case" name="case_type" value="new">
+                <label for="new-case">New case</label>
+            </div>
+
+            <!-- Q4.1: Pre-existing case file upload -->
+            <div id="pre-existing-uploads" class="hidden">
+                <div class="form-group">
+                    <label for="transcript">Q3.1.1: Upload transcript (for pre-existing cases)</label><br>
+                    <input type="file" id="transcript" name="transcript" accept=".txt,.pdf,.docx">
+                </div>
+                <div class="form-group">
+                    <label for="audio">Q3.1.2: Upload audio file (for pre-existing cases)</label><br>
+                    <input type="file" id="audio" name="audio" accept="audio/*">
+                </div>
+            </div>
+
+            <!-- Q4.2: New case objectives -->
+            <div id="new-case-fields" class="hidden">
+                <div class="form-group">
+                    <label for="objective1">Q3.2.1: Objective 1 (for new cases)</label><br>
+                    <input type="text" id="objective1" name="objective1" placeholder="Enter Objective 1"><br>
+                </div>
+                <div class="form-group">
+                    <label for="objective2">Q3.2.2: Objective 2</label><br>
+                    <input type="text" id="objective2" name="objective2" placeholder="Enter Objective 2"><br>
+                </div>
+                <div class="form-group">
+                    <label for="objective3">Q3.2.3: Objective 3</label><br>
+                    <input type="text" id="objective3" name="objective3" placeholder="Enter Objective 3">
+                </div>
+            </div>
+            <!-- Q5: Which template-->
+               
+
+            <!-- Next Button -->
+            <button type="button" onclick="nextSection()">Next</button>
+        </div>
+
+        
+        <!-- Section 2 -->
+        <div id="section2" class="section">
+            <!-- Q4: Which language(s)? -->
+            <div class="form-group">
+                <label>Q4: Which language(s)?</label><br>
+                <input type="checkbox" id="en_us" name="languages[]" value="en_us">
+                <label for="en_us">English US</label><br>
+
+                <input type="checkbox" id="en_uk" name="languages[]" value="en_uk">
+                <label for="en_uk">English UK</label><br>
+                
+                <input type="checkbox" id="fr" name="languages[]" value="fr">
+                <label for="fr">French</label><br>
+                
+                <input type="checkbox" id="de" name="languages[]" value="de">
+                <label for="de">German</label><br>
+                
+                <input type="checkbox" id="es" name="languages[]" value="es">
+                <label for="es">Spanish</label>
+            </div>
+
+            <!-- Q5: Description of the scenario/use case -->
+            <div class="form-group">
+                <label for="description">Q5: Description of the scenario/use case</label><br>
+                <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your description here..."></textarea>
+            </div>
+            
+            <!-- Q6: Are there any restrictions? -->
+            <div class="form-group">
+                <label for="taboo_topics">Q6: Are there any restrictions?</label><br>
+                <textarea id="taboo_topics" name="taboo_topics" rows="4" cols="50" placeholder="Please list any topics or subjects that should be avoided during discussions or in content creation..."></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <button type="button" onclick="prevSection()">Back</button>
+            <button type="button" onclick="nextSection()">Next</button>
+        </div>
+        
+        <!-- Section 3: General Information about the Company -->
+        <div id="section3" class="section">
+            <h2>General Information about the Company</h2>
+
+            <!-- Upload website link -->
+            <div class="form-group">
+                <label for="website">Website:</label><br>
+                <input type="url" id="website" name="website" placeholder="Enter company website URL" required>
+            </div>
+
+            <!-- Upload FAQ file -->
+            <div class="form-group">
+                <label for="faq">FAQ:</label><br>
+                <input type="file" id="faq" name="faq" accept=".txt,.pdf,.docx" required>
+            </div>
+
+            <!-- Upload Sales Deck -->
+            <div class="form-group">
+                <label for="sales_deck">Sales Deck:</label><br>
+                <input type="file" id="sales_deck" name="sales_deck" accept=".pptx,.pdf" required>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <button type="button" onclick="prevSection()">Back</button>
+            <button type="button" onclick="nextSection()">Next</button>
+        </div>
+
+        <!-- Section 4: Agent Information -->
+        <div id="section4" class="section">
+            <h2>Agent Information</h2>
+
+            <!-- 1. Company Name -->
+            <div class="form-group">
+            <label for="agent_name">Company Name:</label><br>
+            <input type="text" id="company_name" name="company_name" placeholder="Company's name" required>
+            </div>
+
+            <!-- 2. Company Description -->
+            <div class="form-group">
+            <label for="company_description">Company Description:</label><br>
+            <input type="text" id="company_description" name="company_description" placeholder="Brief Description of Company" required>
+            </div>
+
+
+            <!-- 3. Agent Name -->
+            <div class="form-group">
+                <label for="agent_name">Agent Name:</label><br>
+                <input type="text" id="agent_name" name="agent_name" placeholder="Enter agent's name" required>
+            </div>
+
+             <!-- 4. Position/Role -->
+             <div class="form-group">
+                <label for="position">Position:</label><br>
+                <input type="text" id="position_name" name="position_name" placeholder="Enter agent's position" required>
+            </div>
+
+          
+             <!-- Navigation Buttons -->
+                <button type="button" onclick="prevSection()">Back</button>
+                <button type="button" onclick="nextSection()">Next</button>
+        </div>
+        <!-- Section 5: Agent voice -->
+        <div id="section5" class="section">
+        
+            <!-- 5. Agent Voice (Radio Buttons with MP3 files) -->
+            <div class="form-group">
+                <label for="agent_voice">Agent Voice:</label><br>
+                <input type="radio" id="voice1" name="agent_voice" value="voice1" required>
+                <label for="voice1">Voice 1</label>
+                <audio controls>
+                    <source src="voice1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio><br>
+
+                <input type="radio" id="voice2" name="agent_voice" value="voice2">
+                <label for="voice2">Voice 2</label>
+                <audio controls>
+                    <source src="voice2.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio><br>
+
+                <input type="radio" id="voice3" name="agent_voice" value="voice3">
+                <label for="voice3">Voice 3</label>
+                <audio controls>
+                    <source src="voice3.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+           </div>
+         
+        <!-- Navigation Buttons -->
+        <button type="button" onclick="prevSection()">Back</button>
+        <button type="button" onclick="nextSection()">Next</button>
+
+        </div>
+
+          <!-- Section 6:  -->
+        
+        <div id="section6" class="section">
+            <h3>Scenarios 6</h3>
+
+            <!-- 1. Not Interested -->
+            <div class="form-group">
+            <label for="roleplay_perfect">1. Not Interested</label><br>
+            <textarea id="roleplay_perfect" name="roleplay_perfect" rows="3" cols="50" placeholder="Enter the 'Not Interested' roleplay script..."></textarea>
+            </div>
+            <!-- 2. Perfect -->
+            <div class="form-group">
+                <label for="roleplay_perfect">2. Perfect</label><br>
+                <textarea id="roleplay_perfect" name="roleplay_perfect" rows="3" cols="50" placeholder="Enter the 'Perfect' roleplay script..."></textarea>
+            </div>
+            <!-- 3. Free Style -->
+            <div class="form-group">
+                <label for="roleplay_freestyle">3. Free Style</label><br>
+                <textarea id="roleplay_freestyle" name="roleplay_freestyle" rows="3" cols="50" placeholder="Enter the 'Free Style' roleplay script..."></textarea>
+            </div>
+
+        <!-- Navigation Buttons -->
+        <button type="button" onclick="prevSection()">Back</button>
+        <button type="button" onclick="nextSection()">Submit</button>
+
+        </div>
+     
+    </div>
+
+    
+</form>
+
+<script>
+    // Show/Hide Pre-existing and New Case Fields
+    document.querySelectorAll('input[name="case_type"]').forEach((elem) => {
+        elem.addEventListener('change', function () {
+            const preExistingUploads = document.getElementById('pre-existing-uploads');
+            const newCaseFields = document.getElementById('new-case-fields');
+            
+            if(this.value === 'pre-existing'){
+                preExistingUploads.classList.remove('hidden');
+                newCaseFields.classList.add('hidden');
+            } else if(this.value === 'new') {
+                preExistingUploads.classList.add('hidden');
+                newCaseFields.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Handle Next and Previous Section Navigation
+    let currentSection = 1;
+    const totalSections = 6;
+
+    function showSection(section) {
+        for (let i = 1; i <= totalSections; i++) {
+            const sec = document.getElementById(`section${i}`);
+            if (i === section) {
+                sec.classList.add('active');
+            } else {
+                sec.classList.remove('active');
+            }
+        }
+    }
+
+    function nextSection() {
+        if (currentSection < totalSections) {
+            currentSection++;
+            showSection(currentSection);
+        }
+    }
+
+    function backSection() {
+        if (currentSection < totalSections) {
+            currentSectio--;
+            showSection(currentSection);
+        }
+    }
+
+    function prevSection() {
+        if (currentSection > 1) {
+            currentSection--;
+            showSection(currentSection);
+        }
+    }
+
+    showSection(currentSection);
+</script>
+
+</body>
+</html>
