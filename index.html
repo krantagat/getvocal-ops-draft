@@ -172,10 +172,10 @@
                 <input type="file" id="faq" name="faq" accept=".txt,.pdf,.docx" required>
             </div>
 
-            <!-- Upload Sales Deck -->
+            <!-- Upload Company Details Deck -->
             <div class="form-group">
-                <label for="sales_deck">Sales Deck:</label><br>
-                <input type="file" id="sales_deck" name="sales_deck" accept=".pptx,.pdf" required>
+                <label for="company_detail">Company Details:</label><br>
+                <input type="file" id="company_detail" name="company_detail" accept=".pptx,.pdf" required>
             </div>
 
             <!-- Navigation Buttons -->
@@ -251,10 +251,35 @@
 
         </div>
 
-          <!-- Section 6:  -->
-        
+
         <div id="section6" class="section">
-            <h3>Scenarios 6</h3>
+        
+            <!-- 6. Launch strategy -->
+            <div class="form-group">
+                <label for="agent_voice">Launch Strategy</label><br>
+            </div>
+        <button type="button" onclick="prevSection()">Back</button>
+        <button type="button" onclick="nextSection()">Next</button>
+ 
+        </div>
+
+           <div id="section7" class="section">
+        
+            <!-- 5. Launch strategy -->
+            <div class="form-group">
+                <label for="agent_voice">Set milestone</label><br>
+              
+           </div>
+           <button type="button" onclick="prevSection()">Back</button>
+           <button type="button" onclick="nextSection()">Next</button>
+
+
+        </div>
+
+          <!-- Section 8:  -->
+        
+        <div id="section8" class="section">
+            <h3>Scenarios 7</h3>
 
             <!-- 1. Not Interested -->
             <div class="form-group">
@@ -302,7 +327,7 @@
 
     // Handle Next and Previous Section Navigation
     let currentSection = 1;
-    const totalSections = 6;
+    const totalSections = 8;
 
     function showSection(section) {
         for (let i = 1; i <= totalSections; i++) {
